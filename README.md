@@ -9,7 +9,8 @@ A lightweight, self-hosted web tool to quickly generate Google Analytics 4 (GA4)
 - **Selector Type**  
   Choose between ID (`#`) or Class (`.`) selectors via the dropdown.
 
-- **Event Parameters**  
+- **Event Parameters**
+- – **Element Selector** (e.g. `notification-button`)  
   – **Event Name** (e.g. `notification_click`)  
   – **Event Category** (e.g. `Notification Click`)  
   – **Event Label** (e.g. `Notification Tracker`)  
