@@ -7,7 +7,7 @@ A lightweight, self-hosted web tool to quickly generate Google Analytics 4 (GA4)
 ## Features
 
 - **Selector Type**  
-  Choose between ID (`#`) or Class (`.`) selectors via a clean, searchable dropdown powered by [Select2](https://select2.org/).
+  Choose between ID (`#`) or Class (`.`) selectors via the dropdown.
 
 - **Event Parameters**  
   – **Event Name** (e.g. `notification_click`)  
