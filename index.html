@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GA4 Event Snippet Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+            padding: 2rem;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(64, 64, 64, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(96, 96, 96, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        .header-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .header-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 1rem;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 70%, #b0b0b0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #c0c0c0;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(30, 30, 30, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1rem;
+            padding-right: 3rem;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow:
+                inset 0 2px 4px rgba(0, 0, 0, 0.3),
+                0 0 0 3px rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        input::placeholder {
+            color: #666;
+            font-style: italic;
+        }
+
+        select option {
+            background: #1a1a1a;
+            color: #ffffff;
+            padding: 0.5rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow:
+                0 4px 8px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #3d3d3d 0%, #2a2a2a 100%);
+            transform: translateY(-2px);
+            box-shadow:
+                0 6px 12px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        textarea {
+            width: 100%;
+            height: 250px;
+            margin-top: 1.5rem;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            padding: 1rem;
+            background: rgba(15, 15, 15, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #00ff88;
+            resize: vertical;
+            backdrop-filter: blur(10px);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        textarea::placeholder {
+            color: #555;
+            font-style: italic;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: rgba(0, 255, 136, 0.3);
+            box-shadow:
+                inset 0 2px 4px rgba(0, 0, 0, 0.5),
+                0 0 0 3px rgba(0, 255, 136, 0.1);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #c0c0c0;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header-wrap">
+            <img src="https://www.gstatic.com/analytics-suite/header/suite/v2/ic_analytics.svg" alt="ga4 icon"
+                class="header-icon" />
+            <h1>GA4 Event Snippet Generator</h1>
+        </div>
+        <form id="snippet-form">
+            <div class="form-group">
+                <label for="selector-type">Selector Type</label>
+                <select id="selector-type">
+                    <option value="id">ID (#)</option>
+                    <option value="class">Class (.)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="element-selector">Element Selector (without prefix)</label>
+                <input id="element-selector" type="text" placeholder="e.g. myButton or myClass" required />
+            </div>
+
+            <div class="form-group">
+                <label for="event-name">Event Name</label>
+                <input id="event-name" type="text" placeholder="e.g. notification_click" required />
+            </div>
+
+            <div class="form-group">
+                <label for="event-category">Event Category</label>
+                <input id="event-category" type="text" placeholder="e.g. Notification Click" required />
+            </div>
+
+            <div class="form-group">
+                <label for="event-label">Event Label</label>
+                <input id="event-label" type="text" placeholder="e.g. Notification Tracker" required />
+            </div>
+
+            <div class="form-group">
+                <label for="event-value">Value (optional, numeric)</label>
+                <input id="event-value" type="number" placeholder="e.g. 1" />
+            </div>
+
+            <button type="button" id="generate">Generate Snippet</button>
+        </form>
+
+        <textarea id="output" readonly placeholder="Your generated snippet will appear here…"></textarea>
+    </div>
+    <footer class="footer">
+        <p id="footer-text"></p>
+    </footer>
+
+    <script>
+        document.getElementById('generate').addEventListener('click', () => {
+            const type = document.getElementById('selector-type').value;
+            let selector = document.getElementById('element-selector').value.trim();
+            const name = document.getElementById('event-name').value.trim();
+            const category = document.getElementById('event-category').value.trim();
+            const label = document.getElementById('event-label').value.trim();
+            const value = document.getElementById('event-value').value.trim();
+
+            if (!selector || !name || !category || !label) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Auto-prefix with '#' or '.' if missing
+            if (!selector.startsWith('#') && !selector.startsWith('.')) {
+                selector = (type === 'class' ? '.' : '#') + selector;
+            }
+
+            // Build the params object
+            const params = {
+                event_category: category,
+                event_label: label,
+                transport_type: 'beacon'
+            };
+            if (value !== '') params.value = Number(value);
+
+            // Convert params to a nicely formatted JS literal
+            const paramsString = JSON.stringify(params, null, 2)
+                .replace(/"([^"]+)":/g, '$1:')  // unquote keys
+                .replace(/"/g, "'");            // single quotes
+
+            // Final snippet
+            const snippet = `;(function(){
+  document.addEventListener('DOMContentLoaded', function(){
+    var els = document.querySelectorAll('${selector}');
+    if (!els.length) {
+      console.warn('[GA4] No elements found for selector: ${selector}');
+      return;
+    }
+    els.forEach(function(el){
+      el.addEventListener('click', function(){
+        if (typeof gtag === 'function') {
+          gtag('event', '${name}', ${paramsString});
+        } else {
+          console.warn('[GA4] gtag not found – event "${name}" not sent.');
+        }
+      });
+    });
+  });
+})();`;
+
+            document.getElementById('output').value = snippet;
+        });
+
+        // Inject dynamic year into footer
+        document.addEventListener('DOMContentLoaded', function () {
+            const footerEl = document.getElementById('footer-text');
+            footerEl.textContent = `©${new Date().getFullYear()} Strops Marketing. All rights reserved.`;
+        });
+    </script>
+</body>
+
+</html>
