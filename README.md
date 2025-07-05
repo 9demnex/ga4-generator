@@ -30,6 +30,6 @@ A lightweight, self-hosted web tool to quickly generate Google Analytics 4 (GA4)
   Modern, dark-mode-friendly styling with blurred background, smooth transitions, and mobile support.
 
 - **Dynamic Footer**  
-  Always-up-to-date © year (`©2025 Strops Marketing, Inc. | All rights reserved.`) inserted on page load.
+  Always-up-to-date © year (`©2025 Your Info.`) inserted on page load.
 
 ---
