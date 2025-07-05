@@ -33,12 +33,3 @@ A lightweight, self-hosted web tool to quickly generate Google Analytics 4 (GA4)
   Always-up-to-date © year (`©2025 Strops Marketing, Inc. | All rights reserved.`) inserted on page load.
 
 ---
-
-## 📦 Installation
-
-1. **Clone or Download** this repository.  
-2. **Open** `index.html` in your favorite browser.  
-3. (Optional) Serve via a static-file server if you need consistent URL paths:
-   ```bash
-   # Python 3
-   python -m http.server 8000
