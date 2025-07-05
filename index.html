@@ -325,7 +325,7 @@
 
             // Convert params to a nicely formatted JS literal
             const paramsString = JSON.stringify(params, null, 2)
-                .replace(/"([^"]+)":/g, '$1:')  // unquote keys
+                .replace(/"([^"]+)":/g, '$1:')
                 .replace(/"/g, "'");            // single quotes
 
             // Final snippet
