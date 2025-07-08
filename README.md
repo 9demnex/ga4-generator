@@ -7,9 +7,10 @@ A lightweight, self-hosted web tool to quickly generate Google Analytics 4 (GA4)
 ## Features
 
 - **Selector Type**  
-  Choose between ID (`#`) or Class (`.`) selectors via a clean, searchable dropdown powered by [Select2](https://select2.org/).
+  Choose between ID (`#`) or Class (`.`) selectors via the dropdown.
 
-- **Event Parameters**  
+- **Event Parameters**
+- – **Element Selector** (e.g. `notification-button`)  
   – **Event Name** (e.g. `notification_click`)  
   – **Event Category** (e.g. `Notification Click`)  
   – **Event Label** (e.g. `Notification Tracker`)  
@@ -29,15 +30,6 @@ A lightweight, self-hosted web tool to quickly generate Google Analytics 4 (GA4)
   Modern, dark-mode-friendly styling with blurred background, smooth transitions, and mobile support.
 
 - **Dynamic Footer**  
-  Always-up-to-date © year (`©2025 Strops Marketing, Inc. | All rights reserved.`) inserted on page load.
+  Always-up-to-date © year (`©2025 Your Info.`) inserted on page load.
 
 ---
-
-## 📦 Installation
-
-1. **Clone or Download** this repository.  
-2. **Open** `index.html` in your favorite browser.  
-3. (Optional) Serve via a static-file server if you need consistent URL paths:
-   ```bash
-   # Python 3
-   python -m http.server 8000
